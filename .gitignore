@@ -1,0 +1,19 @@
+# Python artifacts
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Environments
+.venv/
+venv/
+env/
+bin/
+
+# OpenCV / Project Outputs
+# We ignore output.jpg because we want the Action to generate it, 
+# not for it to be stored in the git history.
+output.jpg
+
+# OS generated files
+.DS_Store
+Thumbs.db

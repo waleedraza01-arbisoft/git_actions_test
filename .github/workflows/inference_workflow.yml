@@ -1,0 +1,23 @@
+name: Model Inference Run
+
+on: [push] # Triggers every time you push code
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Install dependencies
+        run: |
+          pip install opencv-python-headless 
+          # Note: we use 'headless' because the runner has no GUI
+
+      - name: Run Inference
+        run: python inference.py
