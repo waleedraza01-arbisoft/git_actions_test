@@ -1,23 +1,43 @@
-name: Model Inference Run
+name: Advanced Model Inference
 
-on: [push] # Triggers every time you push code
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch: # This adds the manual "Run" button!
 
 jobs:
-  build:
+  inference-job:
     runs-on: ubuntu-latest
+    
+    # MATRIX: Runs 3 separate jobs in parallel
+    strategy:
+      matrix:
+        python-version: ['3.9', '3.10', '3.11']
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v4
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
         with:
-          python-version: '3.9'
+          python-version: ${{ matrix.python-version }}
+          # CACHING: This automatically caches pip dependencies
+          cache: 'pip'
 
       - name: Install dependencies
         run: |
-          pip install opencv-python-headless 
-          # Note: we use 'headless' because the runner has no GUI
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
 
       - name: Run Inference
         run: python inference.py
+
+      - name: Upload Result Image
+        uses: actions/upload-artifact@v4
+        with:
+          # Dynamic name so files don't overwrite each other
+          name: results-python-${{ matrix.python-version }}
+          path: output.jpg
