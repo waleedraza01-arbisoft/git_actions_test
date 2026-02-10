@@ -13,6 +13,8 @@ def run_detection():
         print("Error: Could not find input.jpg")
         return
 
+    print(f"Image Resolution: {img.shape[1]}x{img.shape[0]}")
+    
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     faces = face_cascade.detectMultiScale(gray, 1.1, 4)
 
