@@ -4,11 +4,11 @@ import os
 def run_detection():
     # Load pre-trained face detector (OpenCV built-in)
     model_path = cv2.data.haarcascades + 'haarcascade_frontalface_default.xml'
-    face_cascade = cv2.namedWindow('test') # Just to check OpenCV init
+    # face_cascade = cv2.namedWindow('test') # Just to check OpenCV init
     face_cascade = cv2.CascadeClassifier(model_path)
 
     # Load an image (make sure to add 'input.jpg' to your repo!)
-    img = cv2.imread('cat.jpg')
+    img = cv2.imread('faces.jpg')
     if img is None:
         print("Error: Could not find input.jpg")
         return
